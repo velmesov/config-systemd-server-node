@@ -1,0 +1,17 @@
+[Unit]
+Description=Server: Node
+Requires=network-online.target mongod.service
+After=network-online.target mongod.service
+
+[Service]
+Type=simple
+User=LINUX_USER_NAME
+Group=LINUX_USER_GROUP
+Restart=on-failure
+KillMode=process
+WorkingDirectory=/var/www/PROJECT_DIR
+ExecStart=/snap/bin/node --env-file .env app.js
+ExecStop=/bin/kill -HUP $MAINPID
+
+[Install]
+WantedBy=multi-user.target
